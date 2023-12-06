@@ -4,3 +4,19 @@ body {
   background: url(../public/telephone-3594206_1280.jpg) center / cover no-repeat;
   min-height: 100vh;
 }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+li {
+  margin: 0;
+  padding: 0;
+}

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectContacts } from 'redux/selectors';
-import { fetchContacts } from '../../redux/operations';
+import { selectContacts } from 'contacts/selectors';
+import { fetchContacts } from '../../contacts/operations';
 
 import { Container, Title, SubTitle, Wrapper } from './App.styled';
 import ContactForm from '../ContactForm/ContactForm';
@@ -13,12 +13,10 @@ const App = () => {
   const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
-
   useEffect(() => {
-     // Launching the asynchronous Thunk action fetchContacts when mounting a component
-dispatch(fetchContacts());
+    // Launching the asynchronous Thunk action fetchContacts when mounting a component
+    dispatch(fetchContacts());
   }, [dispatch]);
-
 
   return (
     <Container>

@@ -4,8 +4,8 @@ import { Form, Label, Button, Input } from './ContactForm.styled';
 import { ReactComponent as AddIcon } from '../icons/add.svg';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { selectContacts } from 'redux/selectors';
-import { addContacts } from '../../redux/operations';
+import { selectContacts } from 'contacts/selectors';
+import { addContacts } from '../../contacts/operations';
 
 // Generate unique identifiers for form fields.
 const nameInputId = nanoid();

@@ -1,8 +1,7 @@
 import { Div, Label, Input } from './Filter.styled';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectFilter } from 'redux/selectors';
-import { changeFilter } from 'redux/filterSlice';
-
+import { selectFilter } from 'contacts/selectors';
+import { changeFilter } from 'filter/filterSlice';
 
 // Contact filter component
 const Filter = () => {
@@ -20,15 +19,10 @@ const Filter = () => {
     <Div>
       <Label>
         Find contacts by name
-        <Input
-          type="text"
-          value={value}
-          onChange={onChange}
-        />
+        <Input type="text" value={value} onChange={onChange} />
       </Label>
     </Div>
   );
 };
-
 
 export default Filter;
