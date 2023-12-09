@@ -1,13 +1,13 @@
 import React from 'react';
 import { List, Item, Button } from './ContactList.styled';
-import { ReactComponent as DeleteIcon } from '../icons/delete.svg';
+import { ReactComponent as DeleteIcon } from '../../icons/delete.svg';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { selectVisibleContacts } from 'contacts/selectors';
-import { deleteContacts } from '../../contacts/operations';
+import { selectVisibleContacts } from 'redux/contacts/selectors';
+import { deleteContacts } from '../../redux/contacts/operations';
 
 // Contact list component
-const ContactList = () => {
+export const ContactList = () => {
   const contacts = useSelector(selectVisibleContacts);
   const dispatch = useDispatch();
   return (

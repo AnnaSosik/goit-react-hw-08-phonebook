@@ -1,6 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { getDefaultMiddleware } from '@reduxjs/toolkit';
+import { authReducer } from 'redux/auth/slice';
+import { contactsReducer } from '../redux/contacts/contactSlice';
+import { filterReducer } from 'redux/filter/filterSlice';
+import storage from 'redux-persist/lib/storage';
+
 import {
   persistStore,
+  persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -8,24 +15,15 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { getDefaultMiddleware } from '@reduxjs/toolkit';
-import { authReducer } from 'redux/auth/slice';
-import { contactsReducer } from '../contacts/contactSlice';
-import { filterReducer } from '../filter/filterSlice';
-import storage from 'redux-persist/lib/storage';
-import persistReducer from 'redux-persist/es/persistReducer';
-
 
 
 const middleware = [
   ...getDefaultMiddleware({
-    serializableCheck:{
-      ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST,PURGE, REGISTER]
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },
-}),
+  }),
 ];
-
-
 
 const authPersistConfig = {
   key: 'auth',
@@ -37,8 +35,8 @@ const authPersistConfig = {
 export const store = configureStore({
   reducer: {
     contacts: contactsReducer, // Reduxer for contact state management
-    filter: filterReducer, 
-    auth: persistReducer(authPersistConfig, authReducer),// Reducer for filter state management
+    filter: filterReducer,
+    auth: persistReducer(authPersistConfig, authReducer), // Reducer for filter state management
   },
   // Apply middleware with getDefaultMiddleware
   middleware,

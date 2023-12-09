@@ -1,45 +1,57 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectContacts } from 'contacts/selectors';
-import { fetchContacts } from '../../contacts/operations';
+import { useEffect, lazy } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
+import { Layout } from '../Layout/Layout';
+import { PrivateRoute } from '../PrivateRoute';
+import { RestrictedRoute } from '../RestrictedRoute';
+import { refreshUser } from 'redux/auth/operations';
+import { useAuth } from '../../hooks/useAuth';
+import { Wrapper } from './App.styled';
 
-import { Container, Title, SubTitle, Wrapper } from './App.styled';
-import ContactForm from '../ContactForm/ContactForm';
-import ContactList from '../ContactList/ContactList';
-import Filter from '../Filter/Filter';
+const Home = lazy(() => import('pages/Home'));
+const Register = lazy(() => import('pages/Register'));
+const Login = lazy(() => import('pages/Login'));
+const Contacts = lazy(() => import('pages/Contacts'));
 
-// The value is retrieved from the browser's local storage with the key 'contacts'
-const App = () => {
-  const contacts = useSelector(selectContacts);
+export const App = () => {
   const dispatch = useDispatch();
-
+  const { isRefreshing } = useAuth();
   useEffect(() => {
-    // Launching the asynchronous Thunk action fetchContacts when mounting a component
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  return (
-    <Container>
-      <Title>Phonebook</Title>
-
-      <ContactForm />
-
-      <SubTitle>Contacts</SubTitle>
-
-      {contacts.length > 0 ? (
-        // If there are contacts, the filtering component is displayed
-
-        <Filter />
-      ) : (
-        // If there are no contacts, a message about no contacts is displayed
-        <Wrapper>Your phonebook is empty. Add first contact!</Wrapper>
-      )}
-      {contacts.length > 0 && (
-        // If there are contacts, the contact list component is displayed
-        <ContactList />
-      )}
-    </Container>
+  return isRefreshing ? (
+    <p>Update the user....</p>
+  ) : (
+    <Wrapper>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          {}
+          <Route
+            path="/register"
+            element={
+              <RestrictedRoute redirectTo="/login" component={<Register />} />
+            }
+          />
+          {}
+          <Route
+            path="/login"
+            element={
+              <RestrictedRoute redirectTo="/contacts" component={<Login />} />
+            }
+          />
+          {}
+          <Route
+            path="/contacts"
+            element={
+              <PrivateRoute redirectTo="/login" component={<Contacts />} />
+            }
+          />
+        </Route>
+        {}
+        <Route path="*" element={<Home />} />
+      </Routes>
+    </Wrapper>
   );
 };
-
-export default App;

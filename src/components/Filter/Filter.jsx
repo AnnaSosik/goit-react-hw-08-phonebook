@@ -1,10 +1,10 @@
-import { Div, Label, Input } from './Filter.styled';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectFilter } from 'contacts/selectors';
-import { changeFilter } from 'filter/filterSlice';
+import { selectFilter } from 'redux/contacts/selectors';
+import { changeFilter } from 'redux/filter/filterSlice';
+import { Wrapper, Input, Label } from './Filter.styled';
 
 // Contact filter component
-const Filter = () => {
+export const Filter = () => {
   const value = useSelector(selectFilter);
   const dispatch = useDispatch();
 
@@ -16,13 +16,9 @@ const Filter = () => {
   };
 
   return (
-    <Div>
-      <Label>
-        Find contacts by name
-        <Input type="text" value={value} onChange={onChange} />
-      </Label>
-    </Div>
+    <Wrapper>
+      <Label>Find contacts by name</Label>
+      <Input type="text" value={value} onChange={onChange} />
+    </Wrapper>
   );
 };
-
-export default Filter;

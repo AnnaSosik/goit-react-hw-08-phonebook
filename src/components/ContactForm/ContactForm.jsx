@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import { Form, Label, Button, Input } from './ContactForm.styled';
-import { ReactComponent as AddIcon } from '../icons/add.svg';
+import { ReactComponent as AddIcon } from '../../icons/add.svg';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { selectContacts } from 'contacts/selectors';
-import { addContacts } from '../../contacts/operations';
+import { selectContacts } from 'redux/contacts/selectors';
+import { addContacts } from '../../redux/contacts/operations';
 
 // Generate unique identifiers for form fields.
 const nameInputId = nanoid();
 const numberInputId = nanoid();
 
-const ContactForm = () => {
+export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
